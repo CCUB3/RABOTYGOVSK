@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 from sqlalchemy import select
 
-from RABOTYGOVSK.backend.database import SessionDep
-from RABOTYGOVSK.backend.models.message import MessageOut, MessageDB
+from database import SessionDep
+from models.message import MessageOut, MessageDB
 
 router = APIRouter(prefix="/messages")
 

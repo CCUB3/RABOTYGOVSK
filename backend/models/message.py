@@ -7,12 +7,12 @@ class MessageBase(SQLModel):
 
 
 class MessageOut(MessageBase):
-    id: int | None = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None)
     sent_at: datetime
-    owner_id: int
+    owner: str
 
 
 class MessageDB(MessageBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    datetime: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    owner_id: int = Field(foreign_key="userdb.id")
+    sent_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    owner: str

@@ -1,1 +1,5 @@
-// записи звука, видео, эффект хомяка
+//хомяк
+async function startHamsterRecord() {
+    // тут потом
+    console.log("запись хомяка..");
+}

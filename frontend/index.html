@@ -1,13 +1,173 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Title</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="chat.css">
 </head>
 
 <body>
+<div id="app">
+    <section id="login-screen" class="screen active">
+        <div class="login-container">
 
+            <div class="brand-logo">
+                <div class="rhombus-logo">R</div>
+            </div>
+
+            <h1 class="brand-title">RABOTYAGOVSK</h1>
+            <p class="brand-subtitle">ЛАРП МЕССЕНДЖЕР</p>
+
+            <form id="login-form">
+                <input type="text" id="nickname" placeholder="НИК НИК?" required>
+                <input type="password" id="password" placeholder="введите пароль" required>
+
+                <div id="login-error" class="error-messaage hidden">Неверный логин или пароль</div>
+
+                <button type="submit" id="login-btn" class="btn-action">войти</button>
+                <button type="button" id="register-btn" class="btn-action btn-secondary">зарегистрироваться</button>
+            </form>
+
+            <div class="login-footer-rhombuses">
+                <div class="small-rhombus"></div>
+                <div class="small-rhombus"></div>
+                <div class="small-rhombus"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="chat-screen" class="screen hidden">
+        <header class="chat-header">
+            <div class="chat-header-left">
+                <div class="avatar-rhombus group-avatar">R</div>
+                <div class="chat-info">
+                    <h2>общий чат</h2>
+                    <span class="chat-stats">3 онлайн</span>
+                </div>
+            </div>
+            <div class="chat-header-right">
+                <div class="search-bar">
+                    <span class="search-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </span>
+                    <input type="text" placeholder="найти..">
+                </div>
+                <button id="group-settings-btn" class="icon-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                </button>
+            </div>
+        </header>
+
+        <main id="chat-messages" class="messages-container">
+
+            <div class="message-wrapper">
+                <div class="avatar-rhombus color-green">ВГ</div>
+                <div class="message-content">
+                    <div class="message-meta">
+                        <span class="username color-green">vasya_grob</span>
+                        <span class="time">4:42</span>
+                    </div>
+                    <div class="message-bubble">
+                        ларп,
+                    </div>
+                </div>
+            </div>
+
+            <div class="message-wrapper is-mine">
+                <div class="message-content">
+                    <div class="message-meta">
+                        <span class="username color-accent">Ты</span>
+                        <span class="time">6:23</span>
+                    </div>
+                    <div class="message-bubble bubble-mine">
+                        чо
+                    </div>
+                </div>
+                <div id="my-profile-trigger" class="avatar-rhombus color-accent" style="cursor: pointer;">Я</div>
+            </div>
+
+        </main>
+
+        <footer class="chat-input-area">
+            <button class="icon-btn attach-btn" id="attach-file-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+            </button>
+            <textarea id="message-input" placeholder="сообщение.." rows="1"></textarea>
+            <button id="action-btn" class="icon-btn mic-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+            </button>
+        </footer>
+    </section>
+
+    <div id="profile-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+
+            <header class="modal-header">
+                <h2>профиль</h2>
+                <button id="close-profile-btn" class="icon-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </header>
+
+            <div class="profile-main-info">
+                <div class="avatar-rhombus modal-avatar color-accent">Я</div>
+                <div class="profile-text-info">
+                    <h3>vasya_grob</h3>
+                    <span class="profile-handle">@vasya_grob • онлайн</span>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <span class="section-label">ОСНОВНОЕ</span>
+                <div class="settings-list">
+                    <div class="settings-item">
+                        <span class="item-name">никнейм</span>
+                        <div class="item-value">vasya_grob <span class="text-muted">✎</span></div>
+                    </div>
+                    <div class="settings-item">
+                        <span class="item-name">статус</span>
+                        <div class="item-value">работяга<span class="text-muted">✎</span></div>
+                    </div>
+                    <div class="settings-item">
+                        <span class="item-name">аватар</span>
+                        <div class="item-value text-muted">сменить</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <span class="section-label">ТУМБЛЕР</span>
+                <div class="settings-list">
+                    <div class="settings-item">
+                        <span class="item-name">нихуя не делает</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button id="logout-btn" class="btn-action logout-btn">
+                <svg style="margin-right: 8px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                выйти
+            </button>
+
+        </div>
+    </div>
+
+</div>
+
+<script src="api.js"></script>
+<script src="media.js"></script>
+<script src="app.js"></script>
 </body>
-
 </html>
